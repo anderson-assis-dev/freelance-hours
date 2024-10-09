@@ -12,15 +12,22 @@ return new class extends Migration
     public function up(): void
     {
         Schema::create('users', function (Blueprint $table) {
-            $table->id(); // id integer PRIMARY KEY AUTO_INCREMENT
-            $table->string('name'); // name string
-            $table->string('email'); // email string
-            $table->string('avatar')->nullable(); // avatar string
-            $table->integer('rating')->default(0); // rating int
-            $table->timestamps(); // created_at and updated_at
+            $table->id();
+            $table->string('name');
+            $table->string('email')->unique();
+            $table->string('avatar')->nullable();
+            $table->unsignedTinyInteger('rating')->default(0);
+            $table->timestamps();
         });
 
-
+        Schema::create('sessions', function (Blueprint $table) {
+            $table->string('id')->primary();
+            $table->foreignId('user_id')->nullable()->index();
+            $table->string('ip_address', 45)->nullable();
+            $table->text('user_agent')->nullable();
+            $table->longText('payload');
+            $table->integer('last_activity')->index();
+        });
     }
 
     /**

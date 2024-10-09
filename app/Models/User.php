@@ -19,9 +19,9 @@ class User extends Authenticatable
     protected $fillable = [
         'name',
         'email',
-        'avatar',
-        'rating',
+        'password',
     ];
+
     /**
      * The attributes that should be hidden for serialization.
      *
@@ -37,13 +37,11 @@ class User extends Authenticatable
      *
      * @return array<string, string>
      */
-
-
-    /**
-     * Relacionamento: Um usuário pode ter vários projetos.
-     */
-    public function projects()
+    protected function casts(): array
     {
-        return $this->hasMany(Project::class);
+        return [
+            'email_verified_at' => 'datetime',
+            'password' => 'hashed',
+        ];
     }
 }

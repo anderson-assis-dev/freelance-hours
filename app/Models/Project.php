@@ -2,38 +2,29 @@
 
 namespace App\Models;
 
+use App\ProjectStatus;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 
 class Project extends Model
 {
+    /** @use HasFactory<\Database\Factories\ProjectFactory> */
     use HasFactory;
 
-    /**
-     * Atributos que podem ser atribuídos em massa.
-     *
-     * @var array
-     */
-    protected $fillable = [
-        'title',
-        'description',
-        'user_id',
-        'status',
-        'tech_stack',
-        'ends_at',
-    ];
-
-    /**
-     * Relacionamento: Um projeto pertence a um usuário.
-     */
-    public function user()
+    public function casts()
     {
-        return $this->belongsTo(User::class);
+        return [
+            'tech_stack' => 'array',
+            'status' => ProjectStatus::class,
+            'ends_at' => 'datetime',
+        ];
     }
 
-    /**
-     * Relacionamento: Um projeto pode ter várias propostas.
-     */
+    public function author()
+    {
+        return $this->belongsTo(User::class, 'created_by');
+    }
+
     public function proposals()
     {
         return $this->hasMany(Proposal::class);

@@ -2,24 +2,24 @@
 
 namespace Database\Factories;
 
-use App\Models\Project;
 use App\Models\User;
 use Illuminate\Database\Eloquent\Factories\Factory;
 
+/**
+ * @extends \Illuminate\Database\Eloquent\Factories\Factory<\App\Models\Project>
+ */
 class ProjectFactory extends Factory
 {
-    protected $model = Project::class;
 
-    public function definition()
+    public function definition(): array
     {
         return [
-            'title' => $this->faker->sentence,
-            'description' => $this->faker->paragraph,
-            'user_id' => User::factory(), // Cria um usuário associado automaticamente
-            'status' => $this->faker->randomElement(['active', 'completed', 'pending']),
-            'tech_stack' => json_encode($this->faker->randomElements(['PHP', 'JavaScript', 'React', 'Vue', 'Laravel'], 2)), // Pilha de tecnologia fictícia
-            'created_at' => now(),
-            'ends_at' => $this->faker->dateTimeBetween('+1 week', '+1 month'),
+            'title' => collect(fake()->words(5))->join(' '),
+            'description' => "oi",
+            'ends_at' => fake()->dateTimeBetween('now', '+ 3 days'),
+            'status' => fake()->randomElement(['open', 'closed']),
+            'tech_stack' => fake()->randomElements(['nodejs', 'react', 'javascript', 'vite', 'nextjs'], random_int(1, 5)),
+            'created_by' => User::factory(),
         ];
     }
 }

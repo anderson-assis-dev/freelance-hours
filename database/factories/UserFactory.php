@@ -11,24 +11,13 @@ use Illuminate\Support\Str;
  */
 class UserFactory extends Factory
 {
-    /**
-     * The current password being used by the factory.
-     */
-    protected static ?string $password;
-
-    /**
-     * Define the model's default state.
-     *
-     * @return array<string, mixed>
-     */
     public function definition(): array
     {
         return [
-            'name' => $this->faker->name,
-            'email' => $this->faker->unique()->safeEmail,
-            'avatar' => $this->faker->imageUrl(200, 200, 'people'), // Gera uma URL de imagem fictícia
-            'rating' => $this->faker->numberBetween(1, 5),
-            'created_at' => now(),
+            'name' => fake()->name(),
+            'email' => fake()->unique()->safeEmail(),
+            'rating' => fake()->randomElement([1, 2, 3, 4, 5]),
+            'avatar' => 'https://avatar.iran.liara.run/public',
         ];
     }
 

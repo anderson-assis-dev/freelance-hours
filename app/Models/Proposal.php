@@ -4,27 +4,16 @@ namespace App\Models;
 
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Notifications\Notifiable;
 
 class Proposal extends Model
 {
-    use HasFactory;
+    /** @use HasFactory<\Database\Factories\ProposalFactory> */
+    use HasFactory, Notifiable;
 
-    /**
-     * Atributos que podem ser atribuídos em massa.
-     *
-     * @var array
-     */
     protected $fillable = [
         'email',
         'hours',
-        'project_id',
+        'position_status',
     ];
-
-    /**
-     * Relacionamento: Uma proposta pertence a um projeto.
-     */
-    public function project()
-    {
-        return $this->belongsTo(Project::class);
-    }
 }
